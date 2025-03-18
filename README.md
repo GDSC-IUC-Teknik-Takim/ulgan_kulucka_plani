@@ -420,7 +420,6 @@ Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu
 
    - PyQt5 veya PyQt6 kullanarak modern bir yer istasyonu arayüzü oluşturulacak
    - Arayüz, sensör verilerini görselleştirmek için grafikler içerecek
-   - Uçuş durumu ve telemetri bilgileri için ayrı paneller bulunacak
 
 2. **Veri Görselleştirme**
 
