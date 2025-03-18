@@ -412,6 +412,8 @@ def uzun_islem_baslat():
 
 Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu arasındaki iletişimi sağlayan bir arayüz oluşturmayı amaçlar. Bu proje, PyQt kullanarak gerçek zamanlı veri görselleştirme ve izleme yeteneklerini uygulamanızı sağlar.
 
+
+
 ### Proje Gereksinimleri
 
 1. **PyQt ile Arayüz Tasarımı**
@@ -454,3 +456,6 @@ Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu
 - Harita entegrasyonu (CSV ye GPS verisi eklenerek)
 - Uzaktan komut gönderme arayüzü
 - QTabWidget kullanılarak Charts ve Table olarak iki tab oluşturulduktan sonra Charts'ta grafikler Table'da gelen CSV'deki veriler bir tabloda listelenebilir
+
+### Örnek Arayüz
+![Yer İstasyonu Arayüzü](ground_station.jpg "CanSat Yer İstasyonu Arayüzü")
