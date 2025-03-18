@@ -1,6 +1,4 @@
-# Python Programlama Dili Temelleri
-
-Python, okunabilirliği ve kullanım kolaylığı ile öne çıkan, genel amaçlı bir programlama dilidir. İşte Python öğrenmek isteyen birinin bilmesi gereken temel konular:
+# Python Programlama Dili
 
 ## 1. Kurulum ve Ortam
 
