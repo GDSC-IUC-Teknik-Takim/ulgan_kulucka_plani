@@ -410,8 +410,6 @@ def uzun_islem_baslat():
 
 Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu arasındaki iletişimi sağlayan bir arayüz oluşturmayı amaçlar. Bu proje, PyQt kullanarak gerçek zamanlı veri görselleştirme ve izleme yeteneklerini uygulamanızı sağlar.
 
-
-
 ### Proje Gereksinimleri
 
 1. **PyQt ile Arayüz Tasarımı**
@@ -437,8 +435,6 @@ Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu
    - QGridLayout, QVBoxLayout ve QHBoxLayout gibi yerleşim yöneticileri kullanılacak
    - Pencere boyutu değiştirildiğinde bileşenler uygun şekilde yeniden boyutlandırılacak
 
-
-
 ### Proje Değerlendirme Kriterleri
 
 1. Kod organizasyonu ve yapısı
@@ -455,4 +451,140 @@ Yer istasyonu projesi, CanSat (veya başka bir uçan platform) ile yer istasyonu
 - QTabWidget kullanılarak Charts ve Table olarak iki tab oluşturulduktan sonra Charts'ta grafikler Table'da gelen CSV'deki veriler bir tabloda listelenebilir
 
 ### Örnek Arayüz
+
 ![Yer İstasyonu Arayüzü](ground_station.jpg "CanSat Yer İstasyonu Arayüzü")
+
+# C Programlama Dili
+
+## 1. Call By Value ve Call By Reference & Pointerlar
+
+C programlama dilinde, fonksiyonlara parametre geçirmenin iki temel yöntemi vardır: Call by Value (Değer ile Çağırma) ve Call by Reference (Referans ile Çağırma).
+
+### Call By Value (Değer ile Çağırma)
+
+Bu yöntemde, fonksiyona parametre olarak değerin kendisi geçirilir. Fonksiyon içinde yapılan değişiklikler, orijinal değişkeni etkilemez.
+
+```c
+#include <stdio.h>
+
+void degistir(int a, int b) {
+    int gecici = a;
+    a = b;
+    b = gecici;
+    printf("Fonksiyon içinde: a = %d, b = %d\n", a, b);
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Değiştirmeden önce: x = %d, y = %d\n", x, y);
+
+    degistir(x, y);
+
+    printf("Değiştirdikten sonra: x = %d, y = %d\n", x, y);
+    return 0;
+}
+```
+
+Bu örnekte, `x` ve `y` değerleri fonksiyon içinde değiştirilse de, main fonksiyonundaki değerleri değişmeden kalır.
+
+### Call By Reference (Referans ile Çağırma & Pointerlar)
+
+C dilinde referans ile çağırma, pointer (işaretçi) kullanılarak gerçekleştirilir. Bu yöntemde, değişkenin bellek adresini fonksiyona geçiririz ve fonksiyon bu adresteki değeri değiştirebilir.
+
+```c
+#include <stdio.h>
+
+void degistir(int *a, int *b) {
+    int gecici = *a;
+    *a = *b;
+    *b = gecici;
+    printf("Fonksiyon içinde: a = %d, b = %d\n", *a, *b);
+}
+
+int main() {
+    int x = 10, y = 20;
+    printf("Değiştirmeden önce: x = %d, y = %d\n", x, y);
+
+    degistir(&x, &y);
+
+    printf("Değiştirdikten sonra: x = %d, y = %d\n", x, y);
+    return 0;
+}
+```
+
+Bu örnekte, `x` ve `y` değişkenlerinin adresleri (`&x` ve `&y`) fonksiyona geçirilir. Fonksiyon, bu adreslerdeki değerleri değiştirir ve değişiklikler main fonksiyonuna yansır.
+
+### Pointerlar (İşaretçiler)
+
+Pointer, bir değişkenin bellek adresini tutan özel bir değişken türüdür. C dilinde pointer tanımlamak için `*` operatörü kullanılır.
+
+```c
+int *p;  // int türünde bir pointer tanımlama
+int a = 10;
+p = &a;  // p, a'nın adresini tutar
+printf("a'nın değeri: %d\n", a);
+printf("a'nın adresi: %p\n", &a);
+printf("p'nin tuttuğu adres: %p\n", p);
+printf("p'nin işaret ettiği değer: %d\n", *p);
+
+*p = 20;  // p'nin işaret ettiği adreste bulunan değeri 20 yapar
+printf("Değiştirildikten sonra a'nın değeri: %d\n", a);
+```
+
+## Egzersiz: Matris Elemanlarını Pointer Kullanarak Değiştirme
+
+Aşağıdaki kodu inceleyiniz ve çalıştırınız:
+
+```c
+#include <stdio.h>
+
+void matrisKareAl(int *matris, int satir, int sutun) {
+    int i, j;
+    for (i = 0; i < satir; i++) {
+        for (j = 0; j < sutun; j++) {
+            // Matrisin i,j elemanına erişme ve karesini alma
+            *(matris + i*sutun + j) = (*(matris + i*sutun + j)) * (*(matris + i*sutun + j));
+        }
+    }
+}
+
+void matrisYazdir(int *matris, int satir, int sutun) {
+    int i, j;
+    for (i = 0; i < satir; i++) {
+        for (j = 0; j < sutun; j++) {
+            printf("%d\t", *(matris + i*sutun + j));
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int matris[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
+    printf("Orijinal Matris:\n");
+    matrisYazdir((int *)matris, 3, 3);
+
+    matrisKareAl((int *)matris, 3, 3);
+
+    printf("\nKareleri Alınmış Matris:\n");
+    matrisYazdir((int *)matris, 3, 3);
+
+    return 0;
+}
+```
+
+### Rapor İstemi
+
+Yukarıdaki kodu çalıştırdıktan sonra, aşağıdaki konuları içeren bir rapor hazırlayınız:
+
+1. Kodun nasıl çalıştığını kendi cümlelerinizle açıklayınız.
+2. Pointer aritmetiği kullanarak matris elemanlarına nasıl erişildiğini detaylı olarak açıklayınız.
+3. `*(matris + i*sutun + j)` ifadesinin pointer aritmetiği açısından ne anlama geldiğini açıklayınız.
+4. Call by Reference yönteminin bu örnekte nasıl kullanıldığını ve avantajlarını belirtiniz.
+5. Kodu biraz değiştirerek, matris elemanlarını küpleri ile değiştiren bir fonksiyon yazınız ve sonuçları karşılaştırınız.
+
+Raporunuzda, kodun her bir bölümünü kendi cümlelerinizle açıklamalı ve pointer kavramını anladığınızı göstermelisiniz. Kod örneklerini açıklarken, bellek adresleri ve değerler arasındaki ilişkiyi vurgulamanız önemlidir.
